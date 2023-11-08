@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Githublook</string>
+    <string name="app_tagline">Github Look Up</string>
+    <string name="user_name">User Name</string>
+    <string name="placeholder_username">User Name</string>
+    <string name="user_continue">Continue</string>
+    <string name="back">Back</string>
+    <string name="repositories">Repositories</string>
+    <string name="pull_requests">Pull Requests</string>
+    <string name="user_profile_photo">User Profile Photo</string>
+</resources>
