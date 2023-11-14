@@ -23,9 +23,9 @@ class PullRequestsViewModel @Inject internal constructor(
     getPullRequestsUseCase: GetPullRequestsUseCase,
     savedStateHandle: SavedStateHandle
 ): ViewModel() {
-    private val userName = savedStateHandle[USER_NAME_SAVED_STATE_KEY] ?: NO_USER_NAME
-    private val repoName = savedStateHandle[REPO_NAME_SAVED_STATE_KEY] ?: NO_REPO_NAME
-    private val state = savedStateHandle[PULL_REQUEST_STATE_STATE_KEY] ?: NO_STATE
+    val userName = savedStateHandle[USER_NAME_SAVED_STATE_KEY] ?: NO_USER_NAME
+    val repoName = savedStateHandle[REPO_NAME_SAVED_STATE_KEY] ?: NO_REPO_NAME
+    val state = savedStateHandle[PULL_REQUEST_STATE_STATE_KEY] ?: NO_STATE
 
     val prUiState: StateFlow<PrUiState> = pullRequestsUiState(
         userName = userName,
@@ -79,8 +79,8 @@ class PullRequestsViewModel @Inject internal constructor(
          private const val NO_USER_NAME = ""
          private const val NO_REPO_NAME = ""
          private const val NO_STATE = ""
-         private const val USER_NAME_SAVED_STATE_KEY = "userName"
-         private const val REPO_NAME_SAVED_STATE_KEY = "repoName"
-         private const val PULL_REQUEST_STATE_STATE_KEY = "state"
+         const val USER_NAME_SAVED_STATE_KEY = "userName"
+         const val REPO_NAME_SAVED_STATE_KEY = "repoName"
+         const val PULL_REQUEST_STATE_STATE_KEY = "state"
       }
 }

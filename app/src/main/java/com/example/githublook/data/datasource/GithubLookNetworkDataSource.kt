@@ -7,9 +7,9 @@ import com.example.githublook.data.model.SingleRepoEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GitRemoteDataSource @Inject constructor(
+class GithubLookNetworkDataSource @Inject constructor(
     private val gitRemote: GitRemote
-) : GitDataSource {
+) : GithubLookDataSource {
 
     override fun getUserGitRepositories(username: String): Flow<List<SingleRepoEntity>> {
         return gitRemote.getUserGitRepositories(username)

@@ -34,13 +34,8 @@ fun LandingScreen(onTimeout: () -> Unit, modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
         ) {
-            /// This will always refer to the latest onTimeout function that
-            // LandingScreen was recomposed with
             val currentOnTimeout by rememberUpdatedState(onTimeout)
 
-            // Create an effect that matches the lifecycle of LandingScreen.
-            // If LandingScreen recomposes or onTimeout changes,
-            // the delay shouldn't start again.
             LaunchedEffect(Unit) {
                 delay(SPLASH_WAIT_TIME)
                 currentOnTimeout()
@@ -49,14 +44,11 @@ fun LandingScreen(onTimeout: () -> Unit, modifier: Modifier = Modifier) {
             Image(
                 painterResource(id = R.drawable.ic_github_logo_light),
                 modifier = Modifier
-                    // Set image size to 100 dp
                     .size(100.dp)
-                    // Clip image to be shaped as a circle
                     .clip(CircleShape),
                 contentDescription = null
             )
 
-            // Add a vertical space between the author and message texts
             Spacer(modifier = Modifier.height(40.dp))
 
             Text(
@@ -64,32 +56,6 @@ fun LandingScreen(onTimeout: () -> Unit, modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.displaySmall
             )
         }
-//        /// This will always refer to the latest onTimeout function that
-//        // LandingScreen was recomposed with
-//        val currentOnTimeout by rememberUpdatedState(onTimeout)
-//
-//        // Create an effect that matches the lifecycle of LandingScreen.
-//        // If LandingScreen recomposes or onTimeout changes,
-//        // the delay shouldn't start again.
-//        LaunchedEffect(Unit) {
-//            delay(SplashWaitTime)
-//            currentOnTimeout()
-//        }
-
-//        Image(
-//            painterResource(id = R.drawable.ic_github_logo),
-//            modifier = Modifier
-//                // Set image size to 100 dp
-//                .size(100.dp)
-//                // Clip image to be shaped as a circle
-//                .clip(CircleShape),
-//            contentDescription = null
-//        )
-//
-//        // Add a vertical space between the author and message texts
-//        Spacer(modifier = Modifier.height(4.dp))
-//
-//        Text(text = "Hello")
     }
 }
 

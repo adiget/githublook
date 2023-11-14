@@ -1,7 +1,7 @@
 package com.example.githublook.data.repository
 
 import com.example.githublook.common.AppDispatchers
-import com.example.githublook.data.datasource.GitDataSource
+import com.example.githublook.data.datasource.GithubLookDataSource
 import com.example.githublook.data.datasource.GitDataSourceFactory
 import com.example.githublook.data.mapper.PullRequestMapper
 import com.example.githublook.data.mapper.SingleRepoMapper
@@ -34,7 +34,7 @@ class DataRepository @Inject constructor(
          repoName: String,
          state: PullRequest.State
      ): Flow<List<PullRequest>> {
-        val gitDataSource: GitDataSource = gitDataSourceFactory.getRemoteDataSource()
+        val gitDataSource: GithubLookDataSource = gitDataSourceFactory.getRemoteDataSource()
 
          val pullRequestEntityListFlow : Flow<List<PullRequestEntity>> = gitDataSource.getPullRequestList(
              username,

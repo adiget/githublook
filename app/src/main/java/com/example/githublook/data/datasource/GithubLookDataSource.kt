@@ -4,7 +4,7 @@ import com.example.githublook.data.model.PullRequestEntity
 import com.example.githublook.data.model.SingleRepoEntity
 import kotlinx.coroutines.flow.Flow
 
-interface GitDataSource {
+interface GithubLookDataSource {
     fun getUserGitRepositories(username: String): Flow<List<SingleRepoEntity>>
 
     fun getPullRequestList(

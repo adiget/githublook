@@ -4,11 +4,10 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -55,39 +54,45 @@ fun UserReposScreen(
             )
         },
         content = { contentPadding ->
-            LazyColumn(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = modifier.safeDrawingPadding(),
-                contentPadding = contentPadding
-            ) {
-                when(reposUiState){
-                    UserRepoListViewModel.ReposUiState.Loading -> item {
-                        Spacer(modifier = Modifier.height(100.dp))
-                        Box(
-                            modifier = Modifier.fillMaxSize()
-                                .padding(16.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressBar()
-                        }
-                    }
+            when(reposUiState){
+                UserRepoListViewModel.ReposUiState.Loading -> CircularProgressBar()
 
-                    UserRepoListViewModel.ReposUiState.Error -> {}
+                UserRepoListViewModel.ReposUiState.Error -> {}
 
-                    is UserRepoListViewModel.ReposUiState.Success -> {
-                        items((reposUiState as UserRepoListViewModel.ReposUiState.Success).repos){
-                            repository: SingleRepoView -> UserRepoCard(
-                                modifier = Modifier.padding(vertical = 8.dp),
-                                userRepo = repository,
-                                onCardClick = onCardClick
-                            )
-                        }
-                    }
-                }
+                is UserRepoListViewModel.ReposUiState.Success ->
+                    UserReposScreen(
+                        repos = (reposUiState as UserRepoListViewModel.ReposUiState.Success).repos,
+                        onCardClick = onCardClick,
+                        contentPadding = contentPadding,
+                        modifier = modifier.safeDrawingPadding()
+                        )
+
             }
         }
     )
+}
+
+@Composable
+fun UserReposScreen(
+    repos: List<SingleRepoView>,
+    onCardClick: (repoName: String) -> Unit,
+    contentPadding: PaddingValues,
+    modifier: Modifier
+) {
+    LazyColumn(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        contentPadding = contentPadding,
+        modifier = modifier
+    ) {
+        items(repos){ repository: SingleRepoView ->
+            UserRepoCard(
+                modifier = Modifier.padding(vertical = 8.dp),
+                userRepo = repository,
+                onCardClick = onCardClick
+            )
+        }
+    }
 }
 
 @Composable

@@ -18,11 +18,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserRepoListViewModel @Inject internal constructor(
-    private val viewMapper: SingleGitRepoViewMapper,
+    viewMapper: SingleGitRepoViewMapper,
     getUserReposUseCase: GetUserReposUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val userName = savedStateHandle[USER_NAME_SAVED_STATE_KEY] ?: NO_USER_NAME
+    val userName = savedStateHandle[USER_NAME_SAVED_STATE_KEY] ?: NO_USER_NAME
 
     val reposUiState: StateFlow<ReposUiState> = repositoriesUiState(
         userName = userName,
@@ -64,6 +64,6 @@ class UserRepoListViewModel @Inject internal constructor(
 
     companion object {
         private const val NO_USER_NAME = ""
-        private const val USER_NAME_SAVED_STATE_KEY = "userName"
+        const val USER_NAME_SAVED_STATE_KEY = "userName"
     }
 }

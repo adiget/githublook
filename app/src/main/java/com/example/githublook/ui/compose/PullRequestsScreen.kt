@@ -3,13 +3,11 @@ package com.example.githublook.ui.compose
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
@@ -62,38 +60,41 @@ fun PullRequestsScreen(
             )
         },
         content = { contentPadding ->
-            LazyColumn(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = modifier.safeDrawingPadding(),
-                contentPadding = contentPadding
-            ) {
-                when(prUiState){
-                    PullRequestsViewModel.PrUiState.Loading -> item {
-                        Spacer(modifier = Modifier.height(100.dp))
-                        Box(
-                            modifier = Modifier.fillMaxSize()
-                            .padding(16.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressBar()
-                        }
-                    }
+            when(prUiState){
+                PullRequestsViewModel.PrUiState.Loading -> CircularProgressBar()
 
-                    PullRequestsViewModel.PrUiState.Error -> {}
+                PullRequestsViewModel.PrUiState.Error -> {}
 
-                    is PullRequestsViewModel.PrUiState.Success -> {
-                        items((prUiState as PullRequestsViewModel.PrUiState.Success).prs){
-                                pullRequest: PullRequestView -> PullRequestCard(
-                            modifier = Modifier.padding(vertical = 8.dp),
-                            pullRequest = pullRequest
-                        )
-                        }
-                    }
-                }
+                is PullRequestsViewModel.PrUiState.Success ->
+                    PullRequestsScreen(
+                        pullRequests = (prUiState as PullRequestsViewModel.PrUiState.Success).prs,
+                        contentPadding = contentPadding,
+                        modifier = modifier.safeDrawingPadding()
+                    )
             }
         }
     )
+}
+
+@Composable
+fun PullRequestsScreen(
+    pullRequests: List<PullRequestView>,
+    contentPadding: PaddingValues,
+    modifier: Modifier
+) {
+    LazyColumn(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        contentPadding = contentPadding,
+        modifier = modifier
+    ) {
+        items(pullRequests){ pullRequest: PullRequestView ->
+            PullRequestCard(
+                modifier = Modifier.padding(vertical = 8.dp),
+                pullRequest = pullRequest
+            )
+        }
+    }
 }
 
 @Composable
